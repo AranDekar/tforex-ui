@@ -1,0 +1,129 @@
+/*MasterStyles*/
+h1{
+  color:#369;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:250%;
+  }
+h2,h3{
+  color:#444;
+  font-family:Arial,Helvetica,sans-serif;
+  font-weight:lighter;
+  }
+body{
+  margin:2em;
+  }
+body,input[text],button{
+  color:#888;
+  font-family:Cambria,Georgia;
+}
+a{
+  cursor:pointer;
+  cursor:hand;
+}
+button{
+font-family:Arial;
+background-color:#eee;
+border:none;
+padding:5px10px;
+border-radius:4px;
+cursor:pointer;
+cursor:hand;
+}
+button:hover{
+background-color:#cfd8dc;
+}
+button:disabled{
+background-color:#eee;
+color:#aaa;
+cursor:auto;
+}
+
+/*Navigationlinkstyles*/
+nava{
+padding:5px10px;
+text-decoration:none;
+margin-top:10px;
+display:inline-block;
+background-color:#eee;
+border-radius:4px;
+}
+nava:visited,a:link{
+color:#607D8B;
+}
+nava:hover{
+color:#039be5;
+background-color:#CFD8DC;
+}
+nava.router-link-active{
+color:#039be5;
+}
+
+/*itemsclass*/
+.items{
+margin:002em0;
+list-style-type:none;
+padding:0;
+/*width:24em;*/
+}
+.itemsli{
+cursor:pointer;
+position:relative;
+background-color:#EEE;
+margin:.5em;
+padding:0;
+padding-left:5px;
+border-radius:4px;
+}
+.itemslispan{
+padding-left:25px;
+font-weight:bold;
+}
+.itemslispanlabel{
+font-weight:normal;
+}
+
+.items.badge{
+display:inline-block;
+font-size:small;
+color:white;
+padding:0.9em0.7em00.7em;
+background-color:#607D8B;
+height:3em;
+left:-5px;
+position:relative;
+border-radius:4px004px;
+}
+.itemsli:hover{
+color:#607D8B;
+background-color:#DDD;
+left:.1em;
+}
+.itemsli.selected{
+background-color:#CFD8DC;
+color:white;
+}
+
+.itemsli.selected:hover{
+background-color:#BBD8DC;
+}
+.items.text{
+position:relative;
+top:-3px;
+}
+
+/*everywhereelse*/
+*{
+font-family:Arial,Helvetica,sans-serif;
+}
+.list-group-item{
+border:0px;
+}
+
+ul.nav-tabs{
+margin:5px;
+}
+/*
+Copyright2016GoogleInc.AllRightsReserved.
+UseofthissourcecodeisgovernedbyanMIT-stylelicensethat
+canbefoundintheLICENSEfileathttp://angular.io/license
+*/

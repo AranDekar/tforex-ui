@@ -1,0 +1,13 @@
+
+<ul class="items list-group">
+  <li *ngFor="let strategy of _strategies$ | async; let i = index" class="list-group-item" [class.selected]="isSelected(strategy)" (click)="onSelect(strategy)">
+    <span class="badge">{{i+1}}</span>
+    <span><label> name:</label>{{strategy.name}}</span>
+    <span><label> posted by:</label>{{strategy.postedBy_displayName}}</span>
+    <span><label> granularity:</label>{{strategy.granularity}}</span>
+  </li>
+</ul>
+
+<div class="alert alert-warning text-center" *ngIf="_strategies$.length === 0">
+  No strategies yet <a (click)="createStrategy()">create one</a>?
+</div>

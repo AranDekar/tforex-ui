@@ -1,0 +1,34 @@
+<tfrx-instrument [(ngModel)]='_selectedInstruments'></tfrx-instrument>
+<div *ngFor='let instrument of _selectedInstruments'>
+	<div class="form-group row">
+		<label class="col-xs-2 col-form-label">Display Name:</label>
+		<div class="col-xs-10">
+			{{instrument.displayName}}
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-xs-2 col-form-label">Instrument:</label>
+		<div class="col-xs-10">
+			{{instrument.title}}
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-xs-2 col-form-label">Pip:</label>
+		<div class="col-xs-10">
+			{{instrument.pip}}
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-xs-2 col-form-label">Granularities:</label>
+		<div class="col-xs-4">
+			<span *ngFor='let item of _granularities'>
+				<button type="button" class="btn btn-info" *ngIf='instrument.granularities.indexOf(item) === -1' (click)='onActivateGranularityClicked(instrument, item)'>
+					<i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{item}}
+				</button>
+				<button type="button" class="btn btn-primary" *ngIf='instrument.granularities.indexOf(item) > -1' (click)='onGetInstrumentCandlesInfoClicked(instrument, item)'>
+					<i class="fa fa-check" aria-hidden="true"></i>&nbsp;{{item}}
+				</button>
+			</span>
+		</div>
+	</div>
+</div>

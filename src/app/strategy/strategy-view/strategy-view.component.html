@@ -1,0 +1,21 @@
+<div class="page-header">
+    <h2>{{_strategy.name}}</h2>
+</div>
+{{_userId}} - {{_strategy.postedBy}} 
+<div class="pull-right" [hidden]="authService.userId !== _strategy.postedBy">
+    <a class="btn btn-secondary" (click)="edit()">
+        <i class="glyphicon glyphicon-edit"></i>edit
+    </a>
+    <a class="btn btn-secondary" (click)="remove()">
+        <i class="glyphicon glyphicon-trash"></i>remove
+    </a>
+</div>
+
+<small>
+    <em class="text-muted">
+        Posted on
+        <span> {{_strategy.createdTime | date}}</span>
+        by
+        <span>{{_strategy.postedBy_displayName}}</span>
+    </em>
+</small>

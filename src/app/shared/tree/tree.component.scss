@@ -1,0 +1,51 @@
+.li-shared{
+    position: relative;    
+    cursor: pointer;
+    list-style-type: none;
+}
+
+div.form-control {    
+    padding: 0px;
+    margin: 0px;
+    div.row{        
+        input {
+            float: left;
+            border: 0px;
+            width:90%;                
+        }
+        i{
+            padding-right: 10px;
+            float: right;
+        }
+    }
+    ul{
+        margin: 0px;
+        padding: 0px;
+        max-height: 25em;
+        li.node{
+            @extend .li-shared;
+            padding:5px 0 0 25px;            
+        }
+        li.top-node{
+            @extend .li-shared;
+            padding:5px 0 0 5px;            
+        }
+        &.top-node{
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+    }
+
+    span.title:hover{
+        font-weight: bold;
+    }
+
+    span.selected{
+        font-weight: bold;
+        color: darkslategrey;
+    }
+
+    span.icon:hover{
+        color: lightblue;
+    }
+}

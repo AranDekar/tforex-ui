@@ -1,14 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Http } from '@angular/http';
+
+// Import rxjs map operator
+import 'rxjs/add/operator/map';
 
 @Component({
-  selector: 'app-root',
+  // tslint:disable-next-line:component-selector
+  selector: 'tfrx-app',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.sass']
 })
-export class AppComponent {
-  title = 'app works hooray!';
-  constructor() {
-    let a = 2;
-    a = a + 2;
-  }
-}
+export class AppComponent { }
