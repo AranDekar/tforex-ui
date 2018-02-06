@@ -1,13 +1,17 @@
 <ul class="items list-group">
 	<li *ngFor="let trader of _traders$ | async; let i = index" class="list-group-item" [class.selected]="isSelected(trader)"
-		(click)="onSelect(trader)">
-		<span class="badge">{{i+1}}</span>
-		<span><label> name:</label>{{trader.name}}</span>
-		<span><label> posted by:</label>{{trader.postedBy_displayName}}</span>
-		<span><label> granularity:</label>{{trader.granularity}}</span>
+	 (click)="onSelect(trader)">
+		<span class="badge">{{ i+1 }}</span>
+		<span>
+			<label> name:</label>{{ trader.name }}</span>
+		<span>
+			<label> posted by:</label>{{ trader.postedBy_displayName }}</span>
+		<span>
+			<label> granularity:</label>{{ trader.granularity }}</span>
 	</li>
 </ul>
 
 <div class="alert alert-warning text-center" *ngIf="_traders$.length === 0">
-	No traders yet <a (click)="createTrader()">create one</a>?
+	No traders yet
+	<a (click)="createTrader()">create one</a>?
 </div>

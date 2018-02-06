@@ -1,1 +1,6 @@
-<tfrx-tree [treeNodes]='_instruments$ | async' (selectedItemsChanged)='onSelectedItemsChanged($event)'></tfrx-tree>
+<!-- <tfrx-tree [treeNodes]='_instruments$ | async' (selectedItemsChanged)='onSelectedItemsChanged($event)'></tfrx-tree> -->
+<div class="form-group">
+    <select class="form-control" id="sel1" (ngModelChange)='onSelectedItemsChanged($event)' [ngModel]="_selectedInstrument">
+        <option *ngFor='let instrument of _instruments$ | async' [ngValue]="instrument">{{instrument.title}}</option>
+    </select>
+</div>

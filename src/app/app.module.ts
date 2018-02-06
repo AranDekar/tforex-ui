@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { SharedModule } from './shared';
-import { TforexConfig, APP_CONFIG, CoreModule } from './core';
+import { CoreModule } from './core';
+import { ProxyModule } from './proxy/proxy.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +20,7 @@ import { AppComponent } from './app.component';
     HttpModule,
     AppRoutingModule,
     CoreModule.forRoot(),
+    ProxyModule.forRoot(),
     SharedModule,
   ],
   providers: [],

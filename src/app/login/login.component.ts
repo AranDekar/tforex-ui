@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
-import { Subscription } from 'rxjs/Subscription';
+import * as rxjs from 'rxjs/RX';
 
 import * as core from '../core';
 
@@ -10,20 +10,29 @@ import * as core from '../core';
     <h2>LOGIN</h2>
     <p> {{ _message }} </p>
     <p>
-      <button (click)="login('/auth/google')"  *ngIf="!_authService._isLoggedIn">Login (google)</button>
-      <button (click)="logout()" *ngIf="_authService._isLoggedIn">Logout</button>
+      <button (click)="login('/auth/google')"  *ngIf="!(_userId$|async)">Login (google)</button>
+      <button (click)="logout()" *ngIf="_userId$|async">Logout</button>
     </p>`,
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private _message: string;
-  private _sub: Subscription;
+  private _sub: rxjs.Subscription;
+  private _userId$: rxjs.Observable<string | number | null>;
 
   constructor(public _authService: core.AuthService, public router: Router,
     private _route: ActivatedRoute, @Inject(core.APP_CONFIG) private _config: core.AppConfig) {
-    this.setMessage();
   }
 
   ngOnInit() {
+    this._userId$ = this._authService.userId$;
+
+    this._userId$.subscribe(
+      data => {
+        this._message = 'Logged ' + (data ? 'in' : 'out');
+      },
+      error => console.error(error)
+    );
+
     this._sub = this._route
       .queryParams
       .subscribe(params => {
@@ -38,10 +47,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy() {
     this._sub.unsubscribe();
-  }
-
-  private setMessage() {
-    this._message = 'Logged ' + (this._authService.isLoggedIn ? 'in' : 'out');
   }
 
   private login(path: string) {
@@ -72,6 +77,5 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private logout() {
     this._authService.logout();
-    this.setMessage();
   }
 }

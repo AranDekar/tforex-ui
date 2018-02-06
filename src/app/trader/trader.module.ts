@@ -16,9 +16,6 @@ import * as trader from '../trader';
         trader.TraderComponent,
     ],
     providers: [
-        //   core.httpServiceProvider,
-        trader.TraderService,
-        trader.TraderDataService,
     ],
 })
 export class TraderModule {

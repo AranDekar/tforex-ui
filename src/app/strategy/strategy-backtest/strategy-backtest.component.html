@@ -1,0 +1,24 @@
+<h3>backtest - {{ _strategy.name }}</h3>
+
+<div class="row">
+    <div class="col">
+        posted on {{ _strategy.createdTime | date }} by {{ _strategy.postedBy_displayName }}
+    </div>
+</div>
+
+<div class="row" [hidden]="_userId !== _strategy.postedBy">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">running a new backtest?</div>
+            <div class="card-body">
+                <tfrx-instrument [(ngModel)]='_selectedInstrument'></tfrx-instrument>
+                <div class="form-group">
+                    <label for="caption">Caption:</label>
+
+                    <input type="text" class="form-control" id='caption' [(ngModel)]='_backtestCaption' />
+                </div>
+                <a href="#" class="btn btn-primary" (click)='onBacktestClicked();'>
+                    <i class="ion-ios-pulse-strong backtest-icon" title="backtest"></i>Run</a>
+            </div>
+        </div>
+    </div>

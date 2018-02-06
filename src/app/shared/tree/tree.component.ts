@@ -11,9 +11,10 @@ import * as shared from '../../shared';
 
 @Component({
     moduleId: module.id,
+    // tslint:disable-next-line:component-selector
     selector: 'tfrx-tree',
     templateUrl: 'tree.component.html',
-    styleUrls: ['tree.component.css'],
+    styleUrls: ['tree.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 

@@ -1,33 +1,33 @@
-import { Component, OnInit }      from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Observable }     from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 
 import { DialogService } from '../../core';
 
 import * as core from '../../core';
 import * as strategy from '../../strategy';
+import { StrategyQuery } from '../../proxy/index';
 
 @Component({
     moduleId: module.id,
     templateUrl: 'strategy-view.component.html',
 })
 export class StrategyViewComponent implements OnInit {
-    private _strategy: strategy.StrategyQuery;
+    private _strategy: StrategyQuery;
     private _editName: string | undefined;
     private _userId: string | number | null;
 
     constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        public dialogService: DialogService,
-        private authService: core.AuthService
+        private _route: ActivatedRoute,
+        private _router: Router,
+        public _dialogService: DialogService,
+        private _authService: core.AuthService
     ) {
-        this._userId = authService.userId;
     }
 
     public ngOnInit() {
-        this.route.data.forEach((data: { strategy: strategy.StrategyQuery }) => {
+        this._route.data.forEach((data: { strategy: StrategyQuery }) => {
             this._editName = data.strategy.name;
             this._strategy = data.strategy;
         });
@@ -40,21 +40,21 @@ export class StrategyViewComponent implements OnInit {
         }
         // Otherwise ask the user with the dialog service and return its
         // promise which resolves to true or false when the user decides
-        return this.dialogService.confirm('Discard changes?');
+        return this._dialogService.confirm('Discard changes?');
     }
 
     private cancel() {
-        this.gotoCrises();
+        this.gotoStrategies();
     }
 
     private save() {
         this._strategy.name = this._editName;
-        this.gotoCrises();
+        this.gotoStrategies();
     }
 
 
-    private gotoCrises() {
-        let strategyId = this._strategy ? this._strategy.id : null;
-        this.router.navigate(['/strategies', { id: strategyId, foo: 'foo' }]);
+    private gotoStrategies() {
+        const strategyId = this._strategy ? this._strategy._id : null;
+        this._router.navigate(['/strategies', { _id: strategyId, foo: 'foo' }]);
     }
 }

@@ -1,13 +1,26 @@
-
 <ul class="items list-group">
-  <li *ngFor="let strategy of _strategies$ | async; let i = index" class="list-group-item" [class.selected]="isSelected(strategy)" (click)="onSelect(strategy)">
-    <span class="badge">{{i+1}}</span>
-    <span><label> name:</label>{{strategy.name}}</span>
-    <span><label> posted by:</label>{{strategy.postedBy_displayName}}</span>
-    <span><label> granularity:</label>{{strategy.granularity}}</span>
+  <li *ngFor="let strategy of _strategies$ | async; let i = index" class="list-group-item" [class.selected]="isSelected(strategy)"
+    (click)="onSelect(strategy)">
+    <span class="badge">{{ i+1 }}</span>
+    <span>
+      <label> name:</label>{{ strategy.name }}</span>
+    <span>
+      <label> posted by:</label>{{ strategy.postedBy_displayName }}</span>
+    <span>
+      <label> granularity:</label>{{ strategy.granularity }}</span>
+    <span class='actions'>
+      <span (click)='onBacktestClicked($event, strategy);' [hidden]="_userId !== strategy.postedBy">
+        <i class="ion-ios-pulse-strong backtest-icon" title="backtest"></i>
+      </span>
+      <span (click)='onEditClicked($event, strategy);' [hidden]="_userId !== strategy.postedBy">
+        <i class="ion-compose edit-icon" title="edit"></i>
+      </span>
+
+    </span>
   </li>
 </ul>
 
 <div class="alert alert-warning text-center" *ngIf="_strategies$.length === 0">
-  No strategies yet <a (click)="createStrategy()">create one</a>?
+  No strategies yet
+  <a (click)="createStrategy()">create one</a>?
 </div>

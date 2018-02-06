@@ -9,7 +9,7 @@ const CRISES = [
   new Crisis(4, 'Procrastinators Meeting Delayed Again'),
 ];
 
-let crisesPromise = Promise.resolve(CRISES);
+const crisesPromise = Promise.resolve(CRISES);
 
 import { Injectable } from '@angular/core';
 
@@ -29,7 +29,7 @@ export class CrisisService {
   public addCrisis(name: string) {
     name = name.trim();
     if (name) {
-      let crisis = new Crisis(CrisisService._nextCrisisId++, name);
+      const crisis = new Crisis(CrisisService._nextCrisisId++, name);
       crisesPromise.then(crises => crises.push(crisis));
     }
   }

@@ -3,43 +3,47 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-import * as models from '../../strategy';
+import * as proxy from '../../proxy';
 
 @Injectable()
 export class StrategyDataService {
-    private _strategies$: Subject<models.StrategyQuery[]>;
+    private _isLoaded: boolean;
+    private _strategies$: Subject<proxy.StrategyQuery[]>;
     private _dataStore: {
-        strategies: models.StrategyQuery[]
+        strategies: proxy.StrategyQuery[]
     };
-    public get strategies$(): Observable<models.StrategyQuery[]> { return this._strategies$.asObservable(); }
+    public get strategies$(): Observable<proxy.StrategyQuery[]> { return this._strategies$.asObservable(); }
 
-    constructor(private http: Http, private _service: models.StrategyService) {
-        this._strategies$ = new Subject<models.StrategyQuery[]>();
+    constructor(private http: Http, private _service: proxy.StrategyApi) {
+        this._strategies$ = new Subject<proxy.StrategyQuery[]>();
         this._dataStore = { strategies: [] };
     }
     public loadAll() {
-
         console.log(`http-service owner at strategy data service level ${(<any>this.http).owner}`);
-
-        this._service.get().subscribe(
-            data => {
-                this._dataStore.strategies = data;
-                this._strategies$.next(this._dataStore.strategies);
-            },
-            error => console.log('cannot load strategies')
-        );
+        if (!this._isLoaded) {
+            this._service.getStrategies(null, { withCredentials: true }).subscribe(
+                data => {
+                    this._dataStore.strategies = data;
+                    this._isLoaded = true;
+                    this._strategies$.next(this._dataStore.strategies);
+                },
+                error => {
+                    console.error('cannot load strategies', error);
+                }
+            );
+        }
     }
-    public get(id: string): Observable<models.StrategyQuery> {
+    public get(id: string): Observable<proxy.StrategyQuery> {
         console.log(`http-service owner at strategy data service level ${(<any>this.http).owner}`);
         return Observable.create(observer => {
-            let item = this._dataStore.strategies.find(x => x.id === id);
+            const item = this._dataStore.strategies.find(x => x._id === id);
             if (item) {
                 observer.next(item);
                 observer.complete();
                 return;
             }
 
-            this._service.get(id).subscribe(
+            this._service.getStrategies(id, { withCredentials: true }).subscribe(
                 data => {
                     if (data && data.length === 1) {
                         this._dataStore.strategies.push(data[0]);

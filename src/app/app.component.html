@@ -1,25 +1,27 @@
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a routerLink="/strategies" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }" class="nav-link active">Strategies</a>
-  </li>
+<div class="container-fluid">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a routerLink="/strategies" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }" class="nav-link active">Strategies</a>
+    </li>
 
-  <li class="nav-item">
-    <a routerLink="/traders" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }" class="nav-link">My Traders</a>
-  </li>
-  <li class="nav-item">
-    <a routerLink="/heroes" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }" class="nav-link">Heroes</a>
-  </li>
-  <li class="nav-item">
-    <a routerLink="/crises" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }" class="nav-link">Crises</a>
-  </li>
-  <li class="nav-item">
-    <a routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }" class="nav-link">Login</a>
-  </li>
-  <li class="nav-item">
-    <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }" class="nav-link">Admin</a>
-  </li>
+    <li class="nav-item">
+      <a routerLink="/traders" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }" class="nav-link">My Traders</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/heroes" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }" class="nav-link">Heroes</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/crises" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }" class="nav-link">Crises</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }" class="nav-link">Login</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }" class="nav-link">Admin</a>
+    </li>
 
-</ul>
-<tfrx-error></tfrx-error>
+  </ul>
+  <tfrx-error></tfrx-error>
 
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
+</div>

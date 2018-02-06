@@ -9,4 +9,5 @@ export class Error {
     public errorCode: string;
     public statusCode: string;
     public message: any;
+    public errors: any[];
 }

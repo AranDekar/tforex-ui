@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute }       from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Hero, HeroService } from '../hero';
 
@@ -9,9 +9,9 @@ const idConst = 'id';
   template: `
   <h2>HEROES</h2>
   <div *ngIf="hero">
-    <h3>"{{hero.name}}"</h3>
+    <h{{ hero.name }}"</h3>
     <div>
-      <label>Id: </label>{{hero.id}}</div>
+      <label>Id: </l{{ hero.id }}</div>
     <div>
       <label>Name: </label>
       <input [(ngModel)]="hero.name" placeholder="name"/>
@@ -22,7 +22,7 @@ const idConst = 'id';
   </div>
   `,
 })
-export class HeroDetailComponent implements OnInit, OnDestroy  {
+export class HeroDetailComponent implements OnInit, OnDestroy {
   public hero: Hero;
 
   public sub: any;
@@ -30,13 +30,13 @@ export class HeroDetailComponent implements OnInit, OnDestroy  {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: HeroService) {}
+    private service: HeroService) { }
 
   public ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-       let id = +params[idConst]; // (+) converts string 'id' to a number
-       this.service.getHero(id).then(hero => this.hero = hero);
-     });
+      const id = +params[idConst]; // (+) converts string 'id' to a number
+      this.service.getHero(id).then(hero => this.hero = hero);
+    });
 
 
   }
@@ -46,7 +46,7 @@ export class HeroDetailComponent implements OnInit, OnDestroy  {
   }
 
   public gotoHeroes() {
-    let heroId = this.hero ? this.hero.id : null;
+    const heroId = this.hero ? this.hero.id : null;
     // Pass along the hero id if available
     // so that the HeroList component can select that hero.
     this.router.navigate(['/heroes'], { queryParams: { id: heroId, foo: 'foo' } });

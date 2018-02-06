@@ -4,10 +4,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/f
 import { Observable } from 'rxjs/Observable';
 
 import * as core from '../../core';
+import * as proxy from '../../proxy';
 import * as shared from '../../shared';
 
 @Component({
     moduleId: module.id,
+    // tslint:disable-next-line:component-selector
     selector: 'tfrx-instrument',
     templateUrl: 'instrument.component.html',
     providers: [
@@ -16,8 +18,8 @@ import * as shared from '../../shared';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InstrumentComponent implements ControlValueAccessor, OnInit {
-    private _selectedInstruments: core.Instrument[];
-    private _instruments$: Observable<core.Instrument[]>;
+    private _selectedInstrument: proxy.Instrument;
+    private _instruments$: Observable<proxy.Instrument[]>;
 
     constructor(private _service: core.InstrumentDataService, private _changeDetectorRef: ChangeDetectorRef) { }
     public ngOnInit() {
@@ -25,23 +27,23 @@ export class InstrumentComponent implements ControlValueAccessor, OnInit {
         this._service.loadAll();
     }
 
-    public writeValue(value?: core.Instrument[]) {
+    public writeValue(value?: proxy.Instrument) {
         if (value != null && value !== undefined) {
-            this._selectedInstruments = value;
+            this._selectedInstrument = value;
         }
     }
 
-    public registerOnChange(fn: (_: core.Instrument[]) => {}): void {
+    public registerOnChange(fn: (_: proxy.Instrument) => {}): void {
         this.onChange = fn;
     }
 
     public registerOnTouched(fn: () => {}): void {
         this.onTouched = fn;
     }
-    public onChange = (_: core.Instrument[]) => { return null; };
-    public onTouched = () => { return null; };
+    public onChange = (_: proxy.Instrument) => null;
+    public onTouched = () => null;
 
-    private onSelectedItemsChanged(nodes: core.Instrument[]) {
-        this.onChange(nodes);
+    private onSelectedItemsChanged(node: proxy.Instrument) {
+        this.onChange(node);
     }
 }

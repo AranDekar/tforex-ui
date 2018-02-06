@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import 'rxjs/Rx';
+import 'rxjs/add/observable/throw';
 
 import * as core from '../../core';
 
@@ -54,6 +54,13 @@ export class HttpService extends Http {
             .catch(err => this.handleError(err));
     }
     /**
+   * Performs a request with `put` http method.
+   */
+    public patch(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+        return super.patch(url, body, options)
+            .catch(err => this.handleError(err));
+    }
+    /**
      * Performs a request with `delete` http method.
      */
     public delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
@@ -61,8 +68,11 @@ export class HttpService extends Http {
             .catch(err => this.handleError(err));
     }
     public request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
+        console.log('THE URL IS: ', url);
         return super.request(url, options)
-            .catch((err, caught) => this.handleError(err));
+            .catch((err, caught) => {
+                return this.handleError(err);
+            });
     }
 
     private extractData(res: Response) {
@@ -88,6 +98,7 @@ export class HttpService extends Http {
                 currentError.errorCode = error.code || err.statusText;
                 currentError.statusCode = error.statusCode || err.status;
                 currentError.message = error.message;
+                currentError.errors = error.errors;
             } else {
                 currentError.type = core.ErrorTypeEnum.generic;
                 currentError.message = error;

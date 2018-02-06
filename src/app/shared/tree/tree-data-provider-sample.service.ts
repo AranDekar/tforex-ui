@@ -10,19 +10,19 @@ import * as core from '../../core';
 export class TreeDataProviderSampleService implements shared.TreeDataProvider {
 
     private _dummyData: shared.TreeNode[] = [
-        { _id: "Books", title: 'Books', path: null },
-        { _id: "Programming", title: 'Programming', path: ",Books," },
-        { _id: "Databases", title: 'Databases', path: ",Books,Programming," },
-        { _id: "Languages", title: 'Languages', path: ",Books,Programming," },
-        { _id: "MongoDB", title: 'MongoDB', path: ",Books,Programming,Databases," },
-        { _id: "dbm", title: 'dbm', path: ",Books,Programming,Databases," },
+        { _id: 'Books', title: 'Books', path: null },
+        { _id: 'Programming', title: 'Programming', path: ',Books,' },
+        { _id: 'Databases', title: 'Databases', path: ',Books,Programming,' },
+        { _id: 'Languages', title: 'Languages', path: ',Books,Programming,' },
+        { _id: 'MongoDB', title: 'MongoDB', path: ',Books,Programming,Databases,' },
+        { _id: 'dbm', title: 'dbm', path: ',Books,Programming,Databases,' },
 
-        { _id: "Classes", title: 'Casses', path: null },
-        { _id: "Cooking", title: 'Cooking', path: ",Classes," },
-        { _id: "Desert", title: 'Desert', path: ",Classes,Cooking," },
-        { _id: "Main", title: 'Main', path: ",Classes,Cooking," },
-        { _id: "Seafood", title: 'Seafood', path: ",Classes,Cooking,Main," },
-        { _id: "Pizza", title: 'Pizza', path: ",Classes,Cooking,Main," },
+        { _id: 'Classes', title: 'Casses', path: null },
+        { _id: 'Cooking', title: 'Cooking', path: ',Classes,' },
+        { _id: 'Desert', title: 'Desert', path: ',Classes,Cooking,' },
+        { _id: 'Main', title: 'Main', path: ',Classes,Cooking,' },
+        { _id: 'Seafood', title: 'Seafood', path: ',Classes,Cooking,Main,' },
+        { _id: 'Pizza', title: 'Pizza', path: ',Classes,Cooking,Main,' },
     ];
 
 
@@ -59,7 +59,7 @@ export class TreeDataProviderSampleService implements shared.TreeDataProvider {
             if (!this._dataStore.some((x => x.path != null && regex.test(x.path)))) {
                 console.warn('GETTING DATA FROM THE SERVER FOR THE ', node._id);
                 tempCollection = this._dummyData.filter(x => x.path &&
-                    regex.test(x.path));  // to be replaced by a remote api call               
+                    regex.test(x.path));  // to be replaced by a remote api call
                 tempCollection.forEach(x => this._dataStore.push(x));
             } else {
                 tempCollection = this._dataStore.filter(x => x.path &&
@@ -95,17 +95,17 @@ export class TreeDataProviderSampleService implements shared.TreeDataProvider {
     private loadLinks(input: shared.TreeNode[]): Observable<shared.TreeNode[]> {
 
         return Observable.create(observer => {
-            for (let item of input) {
+            for (const item of input) {
                 // console.log('looking at ', item._id, ' to load');
                 if (!item.path) {
                     // console.log(item._id, ' is a root item so no need to provide links');
                     continue;
                 }
 
-                let paths = item.path.split(',');
+                const paths = item.path.split(',');
                 // console.log('--- paths are', JSON.stringify(paths));
 
-                for (let path of paths) {
+                for (const path of paths) {
                     if (path.length === 0) {
                         continue;
                     }
@@ -115,20 +115,20 @@ export class TreeDataProviderSampleService implements shared.TreeDataProvider {
                         continue;
                     }
 
-                    let item = this._searchDataStore.find(x => x._id === path);
-                    if (!item) {
+                    let searchedItem = this._searchDataStore.find(x => x._id === path);
+                    if (!searchedItem) {
                         // console.log('---------------getting ', path, ' from server');
 
-                        item = this._dummyData.find(x => x._id === path);
+                        searchedItem = this._dummyData.find(x => x._id === path);
 
-                        if (item) {
+                        if (searchedItem) {
                             // console.log('------------------- inserting ', item._id, '  into the local data store')
-                            this._searchDataStore.push(item);
+                            this._searchDataStore.push(searchedItem);
                         }
                     }
-                    if (item) {
+                    if (searchedItem) {
                         // console.log('------- ', item._id, ' is inserted into input list now')
-                        input.push(item);
+                        input.push(searchedItem);
                     }
                 }
             }
@@ -144,7 +144,7 @@ export class TreeDataProviderSampleService implements shared.TreeDataProvider {
 
             if (!this._dataStore.some((x => !x.path))) {  // check if this is already populated, to save an unnecessary remote api call
                 console.warn('GETTING DATA FROM THE SERVER FOR THE ROOTS');
-                tempCollection = this._dummyData.filter(x => !x.path);  // to be replaced by a remote api call                
+                tempCollection = this._dummyData.filter(x => !x.path);  // to be replaced by a remote api call
                 tempCollection.forEach(x => this._dataStore.push(x));
             } else {
                 tempCollection = this._dataStore.filter(x => !x.path);

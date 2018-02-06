@@ -14,13 +14,13 @@ import * as strategy from '../strategy';
   ],
   declarations: [
     strategy.StrategyViewComponent,
+    strategy.StrategyBacktestComponent,
     strategy.StrategyListComponent,
     strategy.StrategyComponent,
   ],
   providers: [
     //   core.httpServiceProvider,
     strategy.StrategyResolveService,
-    strategy.StrategyService,
     strategy.StrategyDataService,
   ],
 })

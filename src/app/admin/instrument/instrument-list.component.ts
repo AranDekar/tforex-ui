@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 
 import * as admin from '../../admin';
 import * as shared from '../../shared';
-import * as core from '../../core';
+import * as proxy from '../../proxy';
 
 
 @Component({
@@ -15,16 +15,16 @@ import * as core from '../../core';
 })
 
 export class InstrumentListComponent implements OnInit, OnDestroy {
-    private _selectedInstruments: core.Instrument[];
+    private _selectedInstruments: proxy.Instrument[];
     private _sub: Subscription;
     private _granularities: string[] = [];
 
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
-        private _instrumentService: core.InstrumentService,
+        private _instrumentService: proxy.InstrumentApi,
     ) {
-        for (let item in core.GranularityEnum) {
+        for (const item in proxy.Strategy.GranularityEnum) {
             if (item) {
                 this._granularities.push(item);
             }
@@ -43,13 +43,8 @@ export class InstrumentListComponent implements OnInit, OnDestroy {
             this._sub.unsubscribe();
         }
     }
-    public onActivateGranularityClicked(instrument: core.Instrument, item: core.GranularityEnum) {
-        this._instrumentService.syncCandles(core.InstrumentEnum[instrument.title], item).subscribe(
-            data => instrument.granularities.push(item.toString()),
-            error => console.log(error)
-        );
-    }
-    public onGetInstrumentCandlesInfoClicked(instrument: core.Instrument, item: core.GranularityEnum) {
+
+    public onGetInstrumentCandlesInfoClicked(instrument: proxy.Instrument, item: proxy.Strategy.GranularityEnum) {
         console.log('this operation is not implemented yet!');
     }
 }

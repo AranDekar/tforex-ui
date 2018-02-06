@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import * as trader from '../../trader';
 import * as shared from '../../shared';
 import * as core from '../../core';
-
+import * as proxy from '../../proxy';
 
 @Component({
     moduleId: module.id,
@@ -15,14 +15,14 @@ import * as core from '../../core';
 })
 export class TraderListComponent implements OnInit, OnDestroy {
 
-    private _traders$: Observable<trader.TraderQuery[]>;
+    private _traders$: Observable<proxy.TraderQuery[]>;
     private _selectedId: string;
     private _sub: Subscription;
 
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
-        private _dataService: trader.TraderDataService,
+        private _dataService: core.TraderDataService,
         private _http: Http
     ) {
     }
@@ -43,10 +43,10 @@ export class TraderListComponent implements OnInit, OnDestroy {
         }
     }
 
-    private isSelected(trader: trader.TraderQuery) { return trader.id === this._selectedId; }
+    private isSelected(_trader: proxy.TraderQuery) { return _trader.id === this._selectedId; }
 
-    private onSelect(trader: trader.TraderQuery) {
+    private onSelect(_trader: proxy.TraderQuery) {
         // Navigate with Absolute link
-        this._router.navigate(['/traders', trader.id]);
+        this._router.navigate(['/traders', _trader.id]);
     }
 }

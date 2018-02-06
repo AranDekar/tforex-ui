@@ -3,19 +3,21 @@ import { Http } from '@angular/http';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
-import { Error, ErrorTypeEnum } from '../../core';
+import { Error, ErrorTypeEnum, AuthService } from '../../core';
+import { Router } from '@angular/router';
 
 @Component({
+    // tslint:disable-next-line:component-selector
     selector: 'tfrx-error',
     template: `
-
-    <div class="alert alert-danger alert-dismissible fade in" role="alert" *ngFor='let error of _errors'>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close" (close)='onCloseAlert(error)'>
+    <div class="alert alert-danger alert-dismissible" *ngFor='let error of _errors'>
+        <button type="button" class="close" data-dismiss="alert" (click)='onCloseAlert(error)'>
             <span aria-hidden="true">&times;</span>
         </button>
-        <strong>Error Code: </strong>{{error?.errorCode}}&nbsp;
-        <strong>Status Code: </strong>{{error?.statusCode}}&nbsp;
-        <strong>Error Message: </strong>{{error?.message|json}}
+        <dl>
+        <dt>Error Code: {{ error?.errorCode }} Status Code: {{ error?.statusCode }} Error Message: {{ error?.message|json }}</dt>
+        <dd *ngFor='let err of error?.errors'> - {{ err?.message|json }}</dd>
+        </dl>
     </div>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,11 +28,12 @@ export class ErrorComponent implements OnInit, OnDestroy {
     private _errors: Error[] = [];
     private _subscription: Subscription;
 
-    constructor(private _http: Http, private _cdr: ChangeDetectorRef) {
-        let o = { key1: 'value1', key2: 'value2' };
+    constructor(private _http: Http, private _cdr: ChangeDetectorRef, private _authService: AuthService,
+        private _router: Router) {
+        const o = { key1: 'value1', key2: 'value2' };
 
         label:
-        for (let v in o) {
+        for (const v in o) {
             if (v) {
                 // console.log(v);
                 // console.log(o[v]);
@@ -45,7 +48,12 @@ export class ErrorComponent implements OnInit, OnDestroy {
         console.log(`http-service owner at error component level ${(<any>this._http).owner}`);
         this._subscription = (<any>this._http)._error$.subscribe(
             (error: Error) => {
-                console.log('hoooooray');
+                if (error.message === 'no jwt-token provided!' || error.message === 'access denied!') {
+                    this._authService.logout();
+
+                    // Navigate to the login page with extras
+                    this._router.navigate(['/login']);
+                }
                 this._errors.push(error);
                 this._cdr.markForCheck();
             });

@@ -6,7 +6,12 @@ import {
 import { CommonModule } from '@angular/common';
 
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { TForextRouterOutletDirective, ErrorComponent, APP_CONFIG, TforexConfig, httpServiceProvider, AuthService, AuthGuardService, AuthAdminGuardService, CanDeactivateGuardService, DialogService, InstrumentDataService, InstrumentService } from '../core';
+import {
+    TForextRouterOutletDirective, ErrorComponent, APP_CONFIG, TforexConfig, httpServiceProvider,
+    AuthService, AuthGuardService, AuthAdminGuardService, CanDeactivateGuardService, DialogService,
+    InstrumentDataService,
+    TraderDataService
+} from '../core';
 
 @NgModule({
     imports: [CommonModule],
@@ -27,8 +32,7 @@ import { TForextRouterOutletDirective, ErrorComponent, APP_CONFIG, TforexConfig,
         CanDeactivateGuardService,
         DialogService,
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        InstrumentDataService,
-        InstrumentService,
+        InstrumentDataService
     ],
 })
 export class CoreModule {
@@ -46,7 +50,7 @@ export class CoreModule {
                 DialogService,
                 { provide: LocationStrategy, useClass: HashLocationStrategy },
                 InstrumentDataService,
-                InstrumentService,
+                TraderDataService
             ],
         };
     }

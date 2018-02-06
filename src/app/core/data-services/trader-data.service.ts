@@ -3,18 +3,18 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-import * as models from '../../trader';
+import * as proxy from '../../proxy';
 
 @Injectable()
 export class TraderDataService {
-    private _traders$: Subject<models.TraderQuery[]>;
+    private _traders$: Subject<proxy.TraderQuery[]>;
     private _dataStore: {
-        traders: models.TraderQuery[]
+        traders: proxy.TraderQuery[]
     };
-    public get traders$(): Observable<models.TraderQuery[]> { return this._traders$.asObservable(); }
+    public get traders$(): Observable<proxy.TraderQuery[]> { return this._traders$.asObservable(); }
 
-    constructor(private http: Http, private _service: models.TraderService) {
-        this._traders$ = new Subject<models.TraderQuery[]>();
+    constructor(private http: Http, private _service: proxy.Traderm5Api) {
+        this._traders$ = new Subject<proxy.TraderQuery[]>();
         this._dataStore = { traders: [] };
     }
     public loadAll() {
@@ -29,10 +29,10 @@ export class TraderDataService {
             error => console.log('cannot load traders')
         );
     }
-    public get(id: string): Observable<models.TraderQuery> {
+    public get(id: string): Observable<proxy.TraderQuery> {
         console.log(`http-service owner at trader data service level ${(<any>this.http).owner}`);
         return Observable.create(observer => {
-            let item = this._dataStore.traders.find(x => x.id === id);
+            const item = this._dataStore.traders.find(x => x.id === id);
             if (item) {
                 observer.next(item);
                 observer.complete();

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute }       from '@angular/router';
-import { Observable }                   from 'rxjs/Observable';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromPromise';
 
 import { Crisis, CrisisService } from './crisis.service';
@@ -11,14 +11,14 @@ const idConst = 'id';
 @Component({
   template: `
   <div *ngIf="_crisis">
-    <h3>"{{editName}}"</h3>
+    <h3{{ editName }}"</h3>
     <div>
-      <label>Id: </label>{{_crisis.id}}</div>
+      <label>Id: </la{{ _crisis.id }}</div>
     <div>
       <label>Name: </label>
       <input [(ngModel)]="_editName" placeholder="name"/>
     </div>
-    <p> 
+    <p>
       <button (click)="save()">Save</button>
       <button (click)="cancel()">Cancel</button>
     </p>
@@ -40,7 +40,7 @@ export class CrisisDetailComponent implements OnInit {
   }
 
   public ngOnInit() {
-    let id = parseInt(this.route.snapshot.params['id'], 10);
+    const id = parseInt(this.route.snapshot.params['id'], 10);
     this.service.getCrisis(id)
       .then(crisis => {
         if (crisis) {
@@ -68,13 +68,13 @@ export class CrisisDetailComponent implements OnInit {
     }
     // Otherwise ask the user with the dialog service and return its
     // promise which resolves to true or false when the user decides
-    let p = this.dialogService.confirm('Discard changes?');
-    let o = Observable.fromPromise(p);
+    const p = this.dialogService.confirm('Discard changes?');
+    const o = Observable.fromPromise(p);
     return o;
   }
 
   public gotoCrises() {
-    let crisisId = this._crisis ? this._crisis.id : null;
+    const crisisId = this._crisis ? this._crisis.id : null;
     // Pass along the hero id if available
     // so that the CrisisListComponent can select that hero.
     // Add a totally useless `foo` parameter for kicks.

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router }       from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Http } from '@angular/http';
-import { Subscription }          from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 
 import { Crisis, CrisisService } from '../crisis';
 
@@ -14,7 +14,7 @@ const idConst = 'id';
       <li *ngFor="let crisis of _crises"
         [class.selected]="isSelected(crisis)"
         (click)="onSelect(crisis)">
-        <span class="badge">{{crisis.id}}</span> {{crisis.name}}
+        <span class="badge">{{ crisis.id }}</span> {{ crisis.name }}
       </li>
     </ul>
   `,

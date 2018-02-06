@@ -3,18 +3,18 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import * as models from '../../core';
+import * as proxy from '../../proxy';
 
 @Injectable()
 export class InstrumentDataService {
-    private _instruments$: BehaviorSubject<models.Instrument[]>;
+    private _instruments$: BehaviorSubject<proxy.Instrument[]>;
     private _dataStore: {
-        instruments: models.Instrument[]
+        instruments: proxy.Instrument[]
     };
-    public get instruments$(): Observable<models.Instrument[]> { return this._instruments$.asObservable(); }
+    public get instruments$(): Observable<proxy.Instrument[]> { return this._instruments$.asObservable(); }
 
-    constructor(private http: Http, private _service: models.InstrumentService) {
-        this._instruments$ = new BehaviorSubject<models.Instrument[]>([]);
+    constructor(private _service: proxy.InstrumentApi) {
+        this._instruments$ = new BehaviorSubject<proxy.Instrument[]>([]);
         this._dataStore = { instruments: [] };
     }
     public loadAll() {
@@ -50,17 +50,16 @@ export class InstrumentDataService {
             this._instruments$.next(this._dataStore.instruments);
         }
     }
-    public get(id: string): Observable<models.Instrument> {
-        console.log(`http-service owner at instrument data service level ${(<any>this.http).owner}`);
+    public get(title: string): Observable<proxy.Instrument> {
         return Observable.create(observer => {
-            let item = this._dataStore.instruments.find(x => x._id === id);
+            const item = this._dataStore.instruments.find(x => x.title === title);
             if (item) {
                 observer.next(item);
                 observer.complete();
                 return;
             }
 
-            this._service.getInstruments(id).subscribe(
+            this._service.getInstruments(title).subscribe(
                 data => {
                     if (data && data.length === 1) {
                         this._dataStore.instruments.push(data[0]);

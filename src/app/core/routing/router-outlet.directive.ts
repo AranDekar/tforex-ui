@@ -7,14 +7,15 @@ import {
 import { ActivatedRoute, RouterOutlet, Router } from '@angular/router';
 
 @Directive({
+    // tslint:disable-next-line:directive-selector
     selector: '[tfrxRouterOutlet]',
 })
 
 export class TForextRouterOutletDirective extends RouterOutlet {
     public activateWith(activatedRoute: ActivatedRoute, loadedResolver: ComponentFactoryResolver): void {
         activatedRoute.url.subscribe(x => {
-            let route = <any>activatedRoute;
-            let url = route._routerState.snapshot.url;
+            const route = <any>activatedRoute;
+            const url = route._routerState.snapshot.url;
             super.activateWith(activatedRoute, loadedResolver);
         });
     }

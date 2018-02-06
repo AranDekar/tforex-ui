@@ -15,24 +15,24 @@ export class TreeSearchFilterPipe implements PipeTransform {
             return items;
         }
 
-        let regex: RegExp = new RegExp(title.toLowerCase());
-        let filterred = items.filter(x => regex.test(x.title.toLowerCase()));
+        const regex: RegExp = new RegExp(title.toLowerCase());
+        const filterred = items.filter(x => regex.test(x.title.toLowerCase()));
         this.loadLinks(items, filterred);
         filterred.forEach(x => x.searched = true);
         return filterred;
     }
 
     private loadLinks(all: shared.TreeNode[], filterred: shared.TreeNode[]) {
-        for (let item of filterred) {
+        for (const item of filterred) {
             // console.log('looking at ', item._id, ' to load');
             if (!item.path) {
                 // console.log(item._id, ' is a root item so no need to provide links');
                 continue;
             }
 
-            let paths = item.path.split(',');
+            const paths = item.path.split(',');
             // console.log('--- paths are', JSON.stringify(paths));
-            for (let path of paths) {
+            for (const path of paths) {
                 if (path.length === 0) {
                     continue;
                 }
@@ -42,10 +42,10 @@ export class TreeSearchFilterPipe implements PipeTransform {
                     continue;
                 }
 
-                let item = all.find(x => x.title === path);
+                const link = all.find(x => x.title === path);
 
                 // console.log('------- ', item._id, ' is inserted into input list now')
-                filterred.push(item);
+                filterred.push(link);
             }
         }
         return filterred;
